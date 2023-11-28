@@ -5,8 +5,9 @@
     import type { Product } from "$lib/product";
     import Info from "./Info.svelte";
 
-    let users: User[] = [];
-    let products: Product[] = [];
+    //let users: User[] = [];
+    //let products: Product[] = [];
+    
 </script>
 <div class="flex flex-col items-center">
     <Heading class="text-center">Practice Exercise 2</Heading>

@@ -2,10 +2,13 @@
     import type { Product } from '$lib/product';
     import { Heading, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
     import { CloseCircleSolid } from "flowbite-svelte-icons";
-    let products: Product[] = [];
+    import { products } from './store'; // Import the store from store.ts
 
-    function deleteClickHandler() {
-        console.log("Delete button clicked");
+    
+
+    
+    function deleteClickHandler(productId: number) {
+        products.update((existingProducts: Product[]) => existingProducts.filter(product => product.id !== productId));
     }
 </script>
 
@@ -14,32 +17,23 @@
     <Table>
         <TableHead>
             <TableHeadCell>Id</TableHeadCell>
-            <TableHeadCell>name</TableHeadCell>
+            <TableHeadCell>Name</TableHeadCell>
             <TableHeadCell>Quantity</TableHeadCell>
             <TableHeadCell>Price</TableHeadCell>
+            <TableHeadCell>Action</TableHeadCell>
         </TableHead>
         <TableBody>
-            <TableBodyRow>
-                <TableBodyCell>0</TableBodyCell>
-                <TableBodyCell>Apple MacBook Pro 17"</TableBodyCell>     
-                <TableBodyCell>10</TableBodyCell>
-                <TableBodyCell>$2999</TableBodyCell>
-                <TableBodyCell><CloseCircleSolid on:click={deleteClickHandler}></CloseCircleSolid></TableBodyCell>
-            </TableBodyRow>
-            <TableBodyRow>
-                <TableBodyCell>1</TableBodyCell>
-                <TableBodyCell>Microsoft Surface Pro</TableBodyCell>
-                <TableBodyCell>5</TableBodyCell>
-                <TableBodyCell>$1999</TableBodyCell>
-                <TableBodyCell><CloseCircleSolid on:click={deleteClickHandler}></CloseCircleSolid></TableBodyCell>
-            </TableBodyRow>
-            <TableBodyRow>
-                <TableBodyCell>2</TableBodyCell>
-                <TableBodyCell>Magic Mouse 2</TableBodyCell>     
-                <TableBodyCell>90</TableBodyCell>
-                <TableBodyCell>$99</TableBodyCell>
-                <TableBodyCell><CloseCircleSolid on:click={deleteClickHandler}></CloseCircleSolid></TableBodyCell>
-            </TableBodyRow>
+            {#each $products as product (product.id)}
+                <TableBodyRow key={product.id}>
+                    <TableBodyCell>{product.id}</TableBodyCell>
+                    <TableBodyCell>{product.name}</TableBodyCell>
+                    <TableBodyCell>{product.quantity}</TableBodyCell>
+                    <TableBodyCell>${product.price}</TableBodyCell>
+                    <TableBodyCell>
+                        <CloseCircleSolid on:click={() => deleteClickHandler(product.id)}></CloseCircleSolid>
+                    </TableBodyCell>
+                </TableBodyRow>
+            {/each}
         </TableBody>
     </Table>
 </div>
