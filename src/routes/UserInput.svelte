@@ -19,15 +19,20 @@
     });
 
     function addUser() {
-    const newUser = new User(username, firstName, lastName);
-    users.update(existingUsers => {
-        if (!existingUsers.some(user => user.username === newUser.username)) {
-            return [...existingUsers, newUser];
-        } else {
-            console.log('Username already exists');
-            return existingUsers;
-        }
-    });
+        const newUser = new User(username, firstName, lastName);
+        users.update(existingUsers => {
+            if (!existingUsers.some(user => user.username === newUser.username)) {
+                return [...existingUsers, newUser];
+            } else {
+                console.log('Username already exists');
+                return existingUsers;
+            }
+        });
+        // Clear input fields after adding user
+        username = "";
+        firstName = "";
+        lastName = "";
+    
     }
 
 </script>

@@ -22,9 +22,9 @@
     // Clear input fields after adding product
     function addProduct() {
         const newProduct = new Product(productId, productName, productQty, productPrice);
-        // check if productId already exists
+        
         products.update(existingProducts => [...existingProducts, newProduct]);
-
+        // Clear input fields after adding product
         productId = 0;
         productName = "";
         productQty = 0;
