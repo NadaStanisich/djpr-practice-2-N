@@ -23,7 +23,18 @@
     function addProduct() {
         const newProduct = new Product(productId, productName, productQty, productPrice);
         
-        products.update(existingProducts => [...existingProducts, newProduct]);
+        // Check if product already exists
+        products.update(existingProducts => {
+            if (!existingProducts.some(product => product.id === newProduct.id)) {
+                return [...existingProducts, newProduct];
+            } else {
+                console.log('Product already exists');
+                return existingProducts;
+            }
+        });
+       // products.update(existingProducts => [...existingProducts, newProduct]);
+
+        
         // Clear input fields after adding product
         productId = 0;
         productName = "";
